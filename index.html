@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Галерея</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./js/gallery.js" />
+  </head>
+  <body>
+    <ul class="gallery"></ul>
+
+    <div class="viewer" id="viewer" aria-hidden="true">
+      <div class="viewer__counter" id="viewerCounter">1/9</div>
+      <button class="viewer__close" id="viewerClose" title="Закрити" aria-label="Закрити">✕</button>
+
+      <div class="viewer__nav">
+        <button class="viewer__btn" id="viewerPrev" aria-label="Попереднє">‹</button>
+        <button class="viewer__btn" id="viewerNext" aria-label="Наступне">›</button>
+      </div>
+
+      <div class="viewer__img-wrap">
+        <img class="viewer__img centered" id="viewerImg" alt="" />
+      </div>
+    </div>
+
+    <script src="./js/gallery.js" type="module"></script>
+  </body>
+</html>
