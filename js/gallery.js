@@ -1,4 +1,3 @@
-// Данные
 const images = [
     { preview:"https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg",
       original:"https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg", description:"Hokkaido Flower" },
@@ -20,7 +19,6 @@ const images = [
       original:"https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg", description:"Lighthouse Coast Sea" },
   ];
   
-  // 1) Разметка 3×3 (одной операцией)
   const gallery = document.querySelector(".gallery");
   gallery.insertAdjacentHTML(
     "beforeend",
@@ -33,7 +31,6 @@ const images = [
     ).join("")
   );
   
-  // 2) Viewer
   const viewer        = document.getElementById("viewer");
   const viewerImg     = document.getElementById("viewerImg");
   const viewerPrev    = document.getElementById("viewerPrev");
@@ -44,7 +41,6 @@ const images = [
   let current = 0;
   const total = images.length;
   
-  // делегирование
   gallery.addEventListener("click", (e) => {
     e.preventDefault();
     const img = e.target.closest(".gallery-image");
@@ -65,7 +61,6 @@ const images = [
     if (e.key === "ArrowRight") showRelative(1);
   });
   
-  // клик по фону — закрыть (клики по контролам/картинке игнорируются)
   viewer.addEventListener("click", (e) => {
     const controls = [viewerPrev, viewerNext, viewerClose, viewerImg];
     if (controls.some(el => el.contains(e.target))) return;
@@ -76,16 +71,12 @@ const images = [
     current = index;
     updateCounter();
   
-    // ставимо зображення в центр (без зсувів)
     setImage(images[current].original, images[current].description, "centered");
   
-    // відкриваємо в'ювер (вмикає білий фон)
     viewer.classList.add("open");
     document.body.classList.add("viewer-lock");
   
-    // перезапуск анімації проявлення
     viewerImg.classList.remove("fade-in");
-    // форсуємо reflow, щоб анімація гарантовано перезапустилася
     void viewerImg.offsetWidth;
     viewerImg.classList.add("fade-in");
     viewerImg.addEventListener("animationend", () => {
@@ -95,18 +86,17 @@ const images = [
   
   
   function closeViewer() {
-    // скидаємо можливі класи слайду/фейду, перезапускаємо fade-out «з нуля»
     viewerImg.classList.remove("fade-in", "enter-right", "enter-left", "leave-left", "leave-right");
-    void viewerImg.offsetWidth; // reflow, щоб гарантувати старт анімації
+    void viewerImg.offsetWidth;
   
     viewerImg.classList.add("fade-out");
     viewerImg.addEventListener(
       "animationend",
       () => {
         viewerImg.classList.remove("fade-out");
-        viewer.classList.remove("open");          // прибираємо білий фон
+        viewer.classList.remove("open");          
         document.body.classList.remove("viewer-lock");
-        viewerImg.className = "viewer__img centered"; // чистий стан для наступного відкриття
+        viewerImg.className = "viewer__img centered"; 
       },
       { once: true }
     );
@@ -117,22 +107,15 @@ const images = [
     viewerCounter.textContent = `${current + 1}/${total}`;
   }
   
-  /**
-   * Правильные направления:
-   *  - step > 0 (правая кнопка): текущая уезжает ВЛЕВО, новая въезжает СПРАВА
-   *  - step < 0 (левая кнопка):  текущая уезжает ВПРАВО, новая въезжает СЛЕВА
-   */
   function showRelative(step) {
     const next = (current + step + total) % total;
     slideTo(next, step > 0 ? "right" : "left");
   }
   
   function slideTo(nextIndex, direction) {
-    // фикс направления: тут было перепутано у некоторых — оставляй ровно так!
     const leaveClass = direction === "right" ? "leave-left" : "leave-right";
     const enterClass = direction === "right" ? "enter-right" : "enter-left";
   
-    // старт уезда текущей
     viewerImg.className = `viewer__img ${leaveClass}`;
   
     viewerImg.addEventListener("transitionend", onLeaveEnd, { once: true });
@@ -140,11 +123,7 @@ const images = [
     function onLeaveEnd() {
       current = nextIndex;
       updateCounter();
-  
-      // ставим новую картинку и начальную "сторону" въезда
       setImage(images[current].original, images[current].description, enterClass);
-  
-      // следующий кадр — едет в центр
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           viewerImg.className = "viewer__img centered";

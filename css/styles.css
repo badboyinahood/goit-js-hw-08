@@ -1,4 +1,3 @@
-/* 3×3 сетка, центр по странице */
 .gallery {
     max-width: 1200px;
     margin: 32px auto;
@@ -18,7 +17,7 @@
   .gallery-link { display:block; height:100%; }
   .gallery-image { width: 100%; height: 100%; object-fit: cover; display:block; }
   
-  /* ======= Viewer з білим затемненням ======= */
+
   .viewer {
     position: fixed;
     inset: 0;
@@ -26,15 +25,15 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
-    background: rgba(255,255,255,0);      /* старт: прозрачно */
-    transition: background .25s ease;     /* плавное появление белого фона */
+    background: rgba(255,255,255,0);      
+    transition: background .25s ease;     
   }
   .viewer.open {
     display: flex;
-    background: rgba(255,255,255,0.75);   /* цель: белое затемнение */
+    background: rgba(255,255,255,0.75);   
   }
   
-  /* картинка */
+
   .viewer__img-wrap {
     position: relative;
     max-width: 90vw;
@@ -48,21 +47,19 @@
     transition: transform .35s ease, opacity .35s ease;
   }
   
-  /* классы анимации (направления) */
-  .enter-right { transform: translateX(40px);  opacity: 0; }  /* вьезд СПРАВА -> центр */
-  .enter-left  { transform: translateX(-40px); opacity: 0; }  /* вьезд СЛЕВА  -> центр */
+
+  .enter-right { transform: translateX(40px);  opacity: 0; } 
+  .enter-left  { transform: translateX(-40px); opacity: 0; }  
   .centered    { transform: translateX(0);     opacity: 1; }
-  .leave-left  { transform: translateX(-40px); opacity: 0; }  /* уезд в ЛЕВО */
-  .leave-right { transform: translateX(40px);  opacity: 0; }  /* уезд в ПРАВО */
+  .leave-left  { transform: translateX(-40px); opacity: 0; }  
+  .leave-right { transform: translateX(40px);  opacity: 0; } 
   
-  /* счетчик / крестик */
   .viewer__counter, .viewer__close {
     position: fixed; top: 16px; font-weight: 600; z-index: 1000; user-select: none;
   }
   .viewer__counter { left: 16px; font-size: 18px; }
   .viewer__close   { right: 20px; font-size: 28px; line-height: 1; cursor: pointer; background: transparent; border: 0; }
-  
-  /* стрелки */
+
   .viewer__nav {
     position: fixed; inset: 0;
     display:flex; align-items:center; justify-content:space-between;
@@ -74,13 +71,11 @@
   }
   .viewer__btn:hover { transform: scale(1.08); opacity: 1; }
   
-  /* блокируем прокрутку страницы при открытом viewer */
   body.viewer-lock { overflow: hidden; }
   
   @media (max-width: 900px) { .gallery { grid-auto-rows: 200px; } }
   @media (max-width: 640px) { .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } }
   
-  /* --- Fade-in при відкритті в'ювера --- */
 @keyframes viewerFadeIn {
     from { opacity: 0; transform: translateX(0) scale(0.985); }
     to   { opacity: 1; transform: translateX(0) scale(1); }
@@ -89,7 +84,6 @@
     animation: viewerFadeIn .28s ease both;
   }
  
-/* --- Fade-out при закритті в'ювера --- */
 @keyframes viewerFadeOut {
     from { opacity: 1; transform: translateX(0) scale(1); }
     to   { opacity: 0; transform: translateX(0) scale(0.985); }

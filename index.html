@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Галерея</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css"/>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
@@ -23,6 +24,19 @@
       </div>
     </div>
 
-    <script src="./js/gallery.js" type="module"></script>
+    <button id="testLightbox">Тест basicLightbox</button>
+<script>
+  document.getElementById('testLightbox').addEventListener('click', () => {
+    const instance = basicLightbox.create(`
+      <img src="https://picsum.photos/1280/720" alt="Test" />
+    `);
+    instance.show();
+  });
+</script>
+
+
+    <!-- перед вашим скриптом галереї -->
+    <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
+    <script src="./js/gallery.js"></script>
   </body>
 </html>
