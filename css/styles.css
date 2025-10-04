@@ -1,93 +1,89 @@
+/* Білий напівпрозорий фон модалки */
+.basicLightbox--visible {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Контент зображення */
+.lb-wrap {
+  position: relative;
+  max-width: 90vw;
+  max-height: 86vh;
+}
+.lb-img {
+  max-width: 90vw;
+  max-height: 86vh;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+
+/* === Контроли на КРАЯХ ЕКРАНА (не поверх картинки) === */
+.lb-counter, .lb-close {
+  position: fixed;    /* ВАЖЛИВО: фіксуємо до viewport */
+  top: 16px;
+  z-index: 1001;
+  font-weight: 600;
+  user-select: none;
+}
+.lb-counter { left: 16px; font-size: 16px; }
+.lb-close {
+  right: 16px; font-size: 26px; line-height: 1;
+  background: transparent; border: 0; cursor: pointer;
+}
+
+/* Стрілки по краях екрана */
+.lb-nav {
+  position: fixed;    /* ВАЖЛИВО */
+  inset: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  pointer-events: none; /* фон не ловить кліки */
+  z-index: 1000;
+}
+.lb-btn {
+  pointer-events: all;   /* кнопки клікабельні */
+  border: 0; background: transparent; cursor: pointer;
+  font-size: 34px; padding: 24px; line-height: 1; color: #111;
+  transition: transform .15s ease, opacity .15s ease; opacity: .9;
+}
+.lb-btn:hover { transform: scale(1.08); opacity: 1; }
+
+/* === Анімації перемикання === */
+@keyframes slideOutLeft { from { transform: translateX(0);    opacity: 1;}
+                          to   { transform: translateX(-48px); opacity: 0;} }
+@keyframes slideInRight { from { transform: translateX(48px); opacity: 0;}
+                          to   { transform: translateX(0);    opacity: 1;} }
+
+@keyframes slideOutRight{ from { transform: translateX(0);    opacity: 1;}
+                          to   { transform: translateX(48px); opacity: 0;} }
+@keyframes slideInLeft  { from { transform: translateX(-48px);opacity: 0;}
+                          to   { transform: translateX(0);    opacity: 1;} }
+
+/* Класи-стани, які ми вмикаємо з JS */
+.anim-leave-left  { animation: slideOutLeft  .22s ease both; }
+.anim-enter-right { animation: slideInRight  .28s ease both; }
+.anim-leave-right { animation: slideOutRight .22s ease both; }
+.anim-enter-left  { animation: slideInLeft   .28s ease both; }
+
+/* Галерея як була */
 .gallery {
-    max-width: 1200px;
-    margin: 32px auto;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 260px;
-    gap: 16px;
-  }
-  .gallery-item {
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(0,0,0,.1);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .gallery-item:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.12); }
-  .gallery-link { display:block; height:100%; }
-  .gallery-image { width: 100%; height: 100%; object-fit: cover; display:block; }
-  
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 260px;
+  gap: 16px;
+}
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.1);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.gallery-item:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.12); }
+.gallery-link { display:block; height:100%; }
+.gallery-image { width:100%; height:100%; object-fit:cover; display:block; }
 
-  .viewer {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    background: rgba(255,255,255,0);      
-    transition: background .25s ease;     
-  }
-  .viewer.open {
-    display: flex;
-    background: rgba(255,255,255,0.75);   
-  }
-  
-
-  .viewer__img-wrap {
-    position: relative;
-    max-width: 90vw;
-    max-height: 86vh;
-  }
-  .viewer__img {
-    max-width: 90vw;
-    max-height: 86vh;
-    display: block;
-    box-shadow: 0 8px 30px rgba(0,0,0,.25);
-    transition: transform .35s ease, opacity .35s ease;
-  }
-  
-
-  .enter-right { transform: translateX(40px);  opacity: 0; } 
-  .enter-left  { transform: translateX(-40px); opacity: 0; }  
-  .centered    { transform: translateX(0);     opacity: 1; }
-  .leave-left  { transform: translateX(-40px); opacity: 0; }  
-  .leave-right { transform: translateX(40px);  opacity: 0; } 
-  
-  .viewer__counter, .viewer__close {
-    position: fixed; top: 16px; font-weight: 600; z-index: 1000; user-select: none;
-  }
-  .viewer__counter { left: 16px; font-size: 18px; }
-  .viewer__close   { right: 20px; font-size: 28px; line-height: 1; cursor: pointer; background: transparent; border: 0; }
-
-  .viewer__nav {
-    position: fixed; inset: 0;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .viewer__btn {
-    border: none; background: transparent; cursor: pointer;
-    font-size: 34px; padding: 24px; line-height: 1; color: #111;
-    transition: transform .15s ease, opacity .15s ease; opacity: .9;
-  }
-  .viewer__btn:hover { transform: scale(1.08); opacity: 1; }
-  
-  body.viewer-lock { overflow: hidden; }
-  
-  @media (max-width: 900px) { .gallery { grid-auto-rows: 200px; } }
-  @media (max-width: 640px) { .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } }
-  
-@keyframes viewerFadeIn {
-    from { opacity: 0; transform: translateX(0) scale(0.985); }
-    to   { opacity: 1; transform: translateX(0) scale(1); }
-  }
-  .viewer__img.fade-in {
-    animation: viewerFadeIn .28s ease both;
-  }
- 
-@keyframes viewerFadeOut {
-    from { opacity: 1; transform: translateX(0) scale(1); }
-    to   { opacity: 0; transform: translateX(0) scale(0.985); }
-  }
-  .viewer__img.fade-out {
-    animation: viewerFadeOut .22s ease both;
-  }
+@media (max-width: 900px) { .gallery { grid-auto-rows: 200px; } }
+@media (max-width: 640px) { .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } }

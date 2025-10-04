@@ -2,41 +2,24 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Галерея</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css"/>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
+
   </head>
   <body>
+    <!-- Контейнер галереї -->
     <ul class="gallery"></ul>
 
-    <div class="viewer" id="viewer" aria-hidden="true">
-      <div class="viewer__counter" id="viewerCounter">1/9</div>
-      <button class="viewer__close" id="viewerClose" title="Закрити" aria-label="Закрити">✕</button>
-
-      <div class="viewer__nav">
-        <button class="viewer__btn" id="viewerPrev" aria-label="Попереднє">‹</button>
-        <button class="viewer__btn" id="viewerNext" aria-label="Наступне">›</button>
-      </div>
-
-      <div class="viewer__img-wrap">
-        <img class="viewer__img centered" id="viewerImg" alt="" />
-      </div>
-    </div>
-
-    <button id="testLightbox">Тест basicLightbox</button>
-<script>
-  document.getElementById('testLightbox').addEventListener('click', () => {
-    const instance = basicLightbox.create(`
-      <img src="https://picsum.photos/1280/720" alt="Test" />
-    `);
-    instance.show();
-  });
-</script>
-
-
-    <!-- перед вашим скриптом галереї -->
+    <!-- basicLightbox JS (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
-    <script src="./js/gallery.js"></script>
+
+    <!-- Твій скрипт галереї (підключаємо ПІСЛЯ бібліотеки) -->
+    <script src="./js/gallery.js" type="module"></script>
   </body>
 </html>
